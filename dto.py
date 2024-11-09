@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List, Dict
 
 class CampaignData(BaseModel):
     name: str
@@ -7,6 +6,3 @@ class CampaignData(BaseModel):
     target_amount: float
     has_visuals: bool
 
-class CampaignAnalysisResponse(BaseModel):
-    score: int
-    feedback: Dict[str, List[str]]

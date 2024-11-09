@@ -2,7 +2,6 @@
 import os
 from openai import OpenAI
 from dto import CampaignData
-from IPython.display import Markdown, display
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))    
 
