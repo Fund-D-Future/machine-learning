@@ -14,42 +14,27 @@ function_object = [
                         "type": "integer",
                         "description": "Score of the campaign on a scale of 0 to 100"
                     },
-                    "recommendation_title_1": {
-                        "type": "string",
-                        "description": "first Title of the improvement suggestion"
-                    },
-                    "recommendation_details_1": {
-                        "type": "string",
-                        "description": "first Detailed suggestion for improving the campaign"
-                    },
-                    "recommendation_title_2": {
-                        "type": "string",
-                        "description": "second first Title of the improvement suggestion"
-                    },
-                    "recommendation_details_2": {
-                        "type": "string",
-                        "description": "second Detailed suggestion for improving the campaign"
-                    },
-                    "recommendation_title_3": {
-                        "type": "string",
-                        "description": "third Title of the improvement suggestion"
-                    },
-                    "recommendation_details_3": {
-                        "type": "string",
-                        "description": "third Detailed suggestion for improving the campaign"
-                    },
-                    "recommendation_title_4": {
-                        "type": "string",
-                        "description": "fourth Title of the improvement suggestion"
-                    },
-                    "recommendation_details_4": {
-                        "type": "string",
-                        "description": "fourth Detailed suggestion for improving the campaign"
-                    },
-                
+                    "recommendations": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "description": "Title of the improvement suggestion"
+                                },
+                                "suggestion": {
+                                    "type": "string",
+                                    "description": "Detailed suggestion for improving the campaign"
+                                }
+                            },
+                            "required": ["title", "suggestion"]
+                        },
+                        "description": "List of improvement suggestions for the campaign"
+                    }
                 },
-            },
-            "required": ["score", "recommendation_title_1", "recommendation_details_1", "recommendation_title_2", "recommendation_details_2", "recommendation_title_3", "recommendation_details_3", "recommendation_title_4", "recommendation_details_4"]
+                "required": ["score", "recommendations"]
+            }
         },
         "instructions": system_prompt
     }

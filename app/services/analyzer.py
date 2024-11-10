@@ -2,10 +2,11 @@
 import os
 from openai import OpenAI
 from dto import CampaignData
+from IPython.display import Markdown
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))    
 
-def get_function_response(data: CampaignData, function_object, tool_choice = "auto", model = "gpt-4o-mini"):
+def get_function_response(data: CampaignData, function_object, tool_choice = "required", model = "gpt-4o-mini"):
   prompt = f"""
     Analyze the following crowdfunding campaign details and provide a score out of 100. 
     Additionally, suggest areas of improvement with headings and subheadings:
@@ -15,11 +16,7 @@ def get_function_response(data: CampaignData, function_object, tool_choice = "au
     Target Amount: ${data.target_amount}
     Includes Visuals: {"Yes" if data.has_visuals else "No"}
     """
-  print(f'''{data.description}
-    Score: {function_object}
-        ''')
-  print(os.environ.get("OPENAI_API_KEY"))
-  print(client)
+
   try:
     response = client.chat.completions.create(
         model = model,
@@ -29,15 +26,10 @@ def get_function_response(data: CampaignData, function_object, tool_choice = "au
         tool_choice = tool_choice
     )
     if(response.choices[0].message.tool_calls):
-        print(response)
         result = response.choices[0].message.tool_calls[0].function.arguments
     else:
         result = response.choices[0].message.content
 
-    new_result = ""
-    for letter in result:
-        if letter != "\\":
-            new_result += letter
-    return new_result
+    return result
   except Exception as e:
       return f"Error occurred while analyzing: {e}"
